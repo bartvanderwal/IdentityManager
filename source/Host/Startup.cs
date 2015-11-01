@@ -31,8 +31,8 @@ using System.Threading.Tasks;
 using System.IdentityModel.Tokens;
 using Microsoft.Owin.Security.Cookies;
 
-//[assembly: OwinStartup(typeof(StartupWithLocalhostSecurity))]
-[assembly: OwinStartup(typeof(StartupWithHostCookiesSecurity))]
+[assembly: OwinStartup(typeof(StartupWithLocalhostSecurity))]
+//[assembly: OwinStartup(typeof(StartupWithHostCookiesSecurity))]
 
 namespace IdentityManager.Host
 {
@@ -74,6 +74,8 @@ namespace IdentityManager.Host
         }
     }
 
+
+    /**
     public class StartupWithHostCookiesSecurity
     {
         public void Configuration(IAppBuilder app)
@@ -147,5 +149,5 @@ namespace IdentityManager.Host
             });
         }
     }
-
+    **/
 }

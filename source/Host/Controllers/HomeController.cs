@@ -9,6 +9,10 @@ using System.Web.Mvc;
 namespace IdentityManager.Host.Controllers {
     public class HomeController : Controller {
         
+        public ActionResult Index() {
+            return View();
+        }
+
         // GET: Login
         public ActionResult Login() {
             return View();
@@ -20,8 +24,8 @@ namespace IdentityManager.Host.Controllers {
             var idmPassword = ConfigurationManager.AppSettings["IdmPassword"];
             if (username == idmUsername && password==idmPassword) {
                 var claims = new Claim[] {
-                    new Claim("name", "Brock"),
-                    // new Claim("name", "Alice Smith"),
+                    // new Claim("name", "Brock"),
+                    new Claim("name", "Alice Smith"),
                     new Claim("role", "Admin")
                 };
                 var id = new ClaimsIdentity(claims, "Cookies");

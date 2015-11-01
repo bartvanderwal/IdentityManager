@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Welcome!</h2>
+<p>You probably want to go here:</p>
+<p><a href="/idm">/idm</a></p>
+<br/>
+<a id="showMoreLink">More info</a>.
+<div id="showMore" style="display: none;">
+    <h2>More info!</h2>
+    <p>This sample project doesn't have it's own content. It just serves as a host to the IdentityManager app.</p>
+    <p>The default location of IdentityManager is <code>/idm</code>. Click the above link to go there, or set it up as startup location of your app! (for this right click the 'Host' project, select 'Properties', go to the 'Web' tab and fill in `idm` for `Specific page`)</p>
+    <p>This default view is added for your convenience. The mainly interesting code in this host project is the configuration code in Startup.cs.</p>
+    <p>You can add the same -or similar config - to your own ASP.NET application. Next you should add the Core project to your own application. Or - probably better - simply use the <a>Nuget package</a> instead (as of writing it is still in Pre release, so it might be filtered out of default Nuget Search results).</p>
+    <p>Including (a copy of) the Core project in your project is only useful if you want to customize IdentityManager beyond it's current configuration options. This is typically necessary. Or if it is - you might want to contribute those options back into the main project on GitHub. In which case it is - ultimately - still better to separate it as a NuGet package.</p>
+</div>
+@section scripts {
+    <script>
+        (function($) {
+            $(function() {
+                $('#showMoreLink').click(function() {
+                    $('#showMore').slideToggle();
+                });
+            });
+        })(jQuery.noConflict());
+    </script>
+}
