@@ -42,6 +42,11 @@ namespace IdentityManager.Host
         {
             LogProvider.SetCurrentLogProvider(new TraceSourceLogProvider());
 
+            app.UseCookieAuthentication(new CookieAuthenticationOptions() {
+                AuthenticationType = "Cookies",
+                LoginPath = new PathString("/Home/Login")
+            });
+
             // this configures IdentityManager
             // we're using a Map just to test hosting not at the root
             app.Map("/idm", idm =>
@@ -56,9 +61,14 @@ namespace IdentityManager.Host
                 factory.Register(new Registration<ICollection<InMemoryRole>>(roles));
                 factory.IdentityManagerService = new Registration<IIdentityManagerService, InMemoryIdentityManagerService>();
 
-                idm.UseIdentityManager(new IdentityManagerOptions
-                {
+                idm.UseIdentityManager(new IdentityManagerOptions {
                     Factory = factory,
+                    SecurityConfiguration = new HostSecurityConfiguration() {
+                        HostAuthenticationType = "Cookies",
+                        NameClaimType = "name",
+                        RoleClaimType = "role",
+                        AdminRoleName = "admin"
+                    }
                 });
             });
         }
@@ -124,21 +134,15 @@ namespace IdentityManager.Host
                 factory.Register(new Registration<ICollection<InMemoryRole>>(roles));
                 factory.IdentityManagerService = new Registration<IIdentityManagerService, InMemoryIdentityManagerService>();
 
-                idm.UseIdentityManager(new IdentityManagerOptions
-                {
+                idm.UseIdentityManager(new IdentityManagerOptions {
                     Factory = factory,
-                    SecurityConfiguration = new HostSecurityConfiguration
-                    {
-                        HostAuthenticationType = "Cookies",
-                        //AdditionalSignOutType = "oidc"
-                    }
+                    SecurityConfiguration = new HostSecurityConfiguration { HostAuthenticationType = "Cookies" }
                 });
             });
 
             // this configures an embedded IdentityServer to act as an external authentication provider
             // when using IdentityManager in Token security mode. normally you'd configure this elsewhere.
-            app.Map("/ids", ids =>
-            {
+            app.Map("/ids", ids => {
                 IdSvrConfig.Configure(ids);
             });
         }
